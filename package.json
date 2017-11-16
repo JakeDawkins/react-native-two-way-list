@@ -1,0 +1,31 @@
+{
+  "name": "react-native-two-way-list",
+  "version": "1.0.0",
+  "description": "React Native FlatList and SectionList wrappers that support adding data to the top",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JakeDawkins/react-native-two-way-list.git"
+  },
+  "author": "Jake Dawkins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JakeDawkins/react-native-two-way-list/issues"
+  },
+  "homepage": "https://github.com/JakeDawkins/react-native-two-way-list#readme",
+  "devDependencies": {
+    "react": "^16.1.1",
+    "react-native": "^0.50.3"
+  },
+  "peerDependencies": {
+    "react": "^16",
+    "react-native": "^0.50"
+  },
+  "dependencies": {
+    "lodash.get": "^4.4.2",
+    "lodash.isequal": "^4.5.0"
+  }
+}
