@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { SectionList } from 'react-native';
+import SectionList from 'react-native/Libraries/Lists/SectionList';
 import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
 
@@ -11,7 +11,6 @@ type Props = {
   onScrollBeginDrag?: (ScrollEvent) => any,
   onScroll?: (ScrollEvent) => any,
   onLayout?: (LayoutEvent) => any,
-  style?: Object | number | Object[], number[],
 };
 
 export default class extends Component<Props> {
@@ -19,9 +18,10 @@ export default class extends Component<Props> {
     onStartReachedThreshold: 0,
   };
   
+  _listRef: any;
   _onStartAlreadyCalled: boolean = false; // called already for a drag/momentum
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate = (prevProps: Props, prevState: any) => {
     const oldSections = prevProps.sections;
     const newSections = this.props.sections;
 
@@ -51,7 +51,6 @@ export default class extends Component<Props> {
     <SectionList
       {...this.props}
       ref={ref => (this._listRef = ref)}
-      style={[{ flex: 1 }, this.props.style || {}]}
       onLayout={this.onLayout}
       onMomentumScrollEnd={this.onMomentumScrollEnd}
       onScroll={this.onScroll}
