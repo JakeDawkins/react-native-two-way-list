@@ -50,6 +50,7 @@ export default class extends Component<Props> {
   render = () => (
     <SectionList
       {...this.props}
+      overScrollMode="always"
       ref={ref => (this._listRef = ref)}
       onLayout={this.onLayout}
       onMomentumScrollEnd={this.onMomentumScrollEnd}
