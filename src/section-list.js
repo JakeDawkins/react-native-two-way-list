@@ -50,7 +50,6 @@ export default class extends Component<Props> {
     <SectionList
       {...this.props}
       ref={ref => (this._listRef = ref)}
-      style={[{ flex: 1 }]}
       onLayout={this.onLayout}
       onMomentumScrollEnd={this.onMomentumScrollEnd}
       onScroll={this.onScroll}
