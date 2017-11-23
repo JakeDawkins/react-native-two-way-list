@@ -11,6 +11,7 @@ type Props = {
   onScrollBeginDrag?: (ScrollEvent) => any,
   onScroll?: (ScrollEvent) => any,
   onLayout?: (LayoutEvent) => any,
+  style?: Object | number | Object[], number[],
 };
 
 export default class extends Component<Props> {
@@ -50,6 +51,7 @@ export default class extends Component<Props> {
     <SectionList
       {...this.props}
       ref={ref => (this._listRef = ref)}
+      style={[{ flex: 1 }, this.props.style || {}]}
       onLayout={this.onLayout}
       onMomentumScrollEnd={this.onMomentumScrollEnd}
       onScroll={this.onScroll}
