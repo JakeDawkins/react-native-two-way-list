@@ -20,6 +20,7 @@ export default class extends Component<Props> {
   
   _listRef: any;
   _onStartAlreadyCalled: boolean = false; // called already for a drag/momentum
+  _startThreshold: number = 0; // px from top onStartReached will be called
 
   componentDidUpdate = (prevProps: Props, prevState: any) => {
     const oldSections = prevProps.sections;
@@ -84,7 +85,7 @@ export default class extends Component<Props> {
     );
 
     if (
-      y <= this.props.onStartReachedThreshold && // nearing the top
+      y <= this._startThreshold && // nearing the top
       velocity < 0 && // scrolling _toward_ the top
       !this._onStartAlreadyCalled && // hasn't been called this drag/momentum
       typeof this.props.onStartReached === 'function'
@@ -99,5 +100,8 @@ export default class extends Component<Props> {
     const { onLayout, onStartReachedThreshold } = this.props;
 
     onLayout ? onLayout(e) : null;
+    
+    const threshold = onStartReachedThreshold ? onStartReachedThreshold : 0;
+    this._startThreshold = height * threshold;
   };
 }
