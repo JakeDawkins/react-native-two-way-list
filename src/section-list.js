@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { SectionList } from 'react-native';
+import SectionList from 'react-native/Libraries/Lists/SectionList';
 import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
 
@@ -11,14 +11,18 @@ type Props = {
   onScrollBeginDrag?: (ScrollEvent) => any,
   onScroll?: (ScrollEvent) => any,
   onLayout?: (LayoutEvent) => any,
-  style?: Object,
 };
 
 export default class extends Component<Props> {
+  static defaultProps = {
+    onStartReachedThreshold: 0,
+  };
+  
+  _listRef: any;
   _onStartAlreadyCalled: boolean = false; // called already for a drag/momentum
   _startThreshold: number = 0; // px from top onStartReached will be called
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate = (prevProps: Props, prevState: any) => {
     const oldSections = prevProps.sections;
     const newSections = this.props.sections;
 
@@ -37,7 +41,7 @@ export default class extends Component<Props> {
         this._listRef.scrollToLocation({
           sectionIndex: numAdded,
           itemIndex: 0,
-          viewOffset: -currentPos, // get the user back to where they were
+          viewOffset: 0, // get the user back to where they were
           animated: false,
         });
       }
@@ -47,8 +51,8 @@ export default class extends Component<Props> {
   render = () => (
     <SectionList
       {...this.props}
+      overScrollMode="always"
       ref={ref => (this._listRef = ref)}
-      style={[{ flex: 1 }, this.props.style || {}]}
       onLayout={this.onLayout}
       onMomentumScrollEnd={this.onMomentumScrollEnd}
       onScroll={this.onScroll}
@@ -70,7 +74,9 @@ export default class extends Component<Props> {
 
   onScroll = (e: ScrollEvent): void => {
     const { nativeEvent: { contentOffset: { y } } } = e;
-    this.props.onScroll ? this.props.onScroll(e) : null;
+    if (this.props.onScroll && typeof this.props.onScroll === 'function') {
+      this.props.onScroll(e);
+    }
 
     // XXX probably not the safest way to do this but ¯\_(ツ)_/¯
     const velocity = get(
@@ -94,7 +100,7 @@ export default class extends Component<Props> {
     const { onLayout, onStartReachedThreshold } = this.props;
 
     onLayout ? onLayout(e) : null;
-
+    
     const threshold = onStartReachedThreshold ? onStartReachedThreshold : 0;
     this._startThreshold = height * threshold;
   };
